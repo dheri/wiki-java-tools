@@ -35,3 +35,5 @@ nbactions.xml
 Icon?
 ehthumbs.db
 Thumbs.db
+.gradle
+.idea
