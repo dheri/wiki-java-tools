@@ -37,3 +37,7 @@ ehthumbs.db
 Thumbs.db
 .gradle
 .idea
+distrib
+gradle_build
+libs
+*.class
