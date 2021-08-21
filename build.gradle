@@ -12,7 +12,7 @@ repositories {
 }
 dependencies {
     implementation "jakarta.xml.bind:jakarta.xml.bind-api:2.3.3"
-    implementation "com.beust:jcommander:1.48"
+    implementation "org.glassfish.jaxb:jaxb-runtime:2.3.2"
     implementation "com.beust:jcommander:1.48"
 }
 
@@ -26,8 +26,6 @@ task compile(dependsOn: copy_deps_for_ant) {
         def classpath = {
             fileset(dir: dir_libs, includes: '*.jar')
         }
-
-        ant.echo("------")
 
         def cp = file(dir_libs).listFiles().findAll { it.name.endsWith('.jar') }.join(':')
         ant.echo(cp)
@@ -48,6 +46,7 @@ task imker_gui_jar(dependsOn: compile) {
                 delegate.attribute(name: "Main-Class", value: "app.ImkerGUI")
                 delegate.attribute(name: "Class-Path", value: ".")
             }
+            zipgroupfileset(dir: dir_libs, includes: "*.jar")
             fileset(dir: dir_build)
         }
     }
@@ -61,7 +60,7 @@ task imker_cli_jar(dependsOn: compile) {
                 delegate.attribute(name: "Main-Class", value: "app.ImkerCLI")
                 delegate.attribute(name: "Class-Path", value: ".")
             }
-            zipgroupfileset(dir: dir_libs, includes: "jcommander-1.48.jar")
+            zipgroupfileset(dir: dir_libs, includes: "*.jar")
             fileset(dir: dir_build)
         }
     }

@@ -103,6 +103,7 @@ public class ImkerGUI extends ImkerBase {
 			break;
 		case PRE_DOWNLOAD:
 			try {
+                readFileListFromFile();
 				download();
 				verifyCheckSum();
 				state = State.TERMINATED;
@@ -119,6 +120,10 @@ public class ImkerGUI extends ImkerBase {
 			System.exit(-1);
 		}
 	}
+
+    private void readFileListFromFile() {
+        setFileNames(IOHandler.readFromFile());
+    }
 
 	/**
 	 * Terminate on invalid input; Otherwise try to fetch the file list while

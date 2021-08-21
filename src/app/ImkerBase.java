@@ -11,11 +11,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Locale;
-import java.util.Queue;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.logging.Level;
 
 import javax.security.auth.login.LoginException;
@@ -117,8 +113,11 @@ public abstract class ImkerBase extends App {
 			new File(outputFolder.getPath() + File.separator + FOLDER_WINDOWS_ENCODED_FILES).mkdir();
 
 		for (int i = 0; i < fileNames.length; i++) {
-			final String fileName = fileNames[i]
-					.substring(getFilePrefixLenght());
+			if (IOHandler.fileIsCommented(fileNames[i])){
+				continue;
+			}
+
+			final String fileName = fileNames[i].substring(getFilePrefixLenght());
 			sh.handle(i, fileName);
 
 			final File outputFile = new File(outputFolder.getPath()
@@ -359,6 +358,7 @@ public abstract class ImkerBase extends App {
 	 *            the new array of file names
 	 */
 	protected void setFileNames(String[] fileNames) {
+		IOHandler.writeToFile(Arrays.asList(fileNames));
 		this.fileNames = fileNames;
 	}
 
